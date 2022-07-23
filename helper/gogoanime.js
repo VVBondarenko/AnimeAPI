@@ -1,4 +1,3 @@
-import axios from 'axios';
 import CryptoJS from 'crypto-js';
 
 const key = CryptoJS.enc.Utf8.parse("37911490979715163134003223491201");

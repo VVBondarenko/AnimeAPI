@@ -156,7 +156,7 @@ export const fetchPopular = async ({ list = [], type = 1 }) => {
             error_message: err
         }
     }
-}
+};
 
 export const fetchAnimeInfo = async ({ malId, list = {} }) => {
     try {
