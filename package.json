@@ -1,0 +1,28 @@
+{
+  "name": "anime-api",
+  "version": "1.0.0",
+  "description": "A simple API to search, scrape popular and recent animes, streaming links and more.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index"
+  },
+  "keywords": [
+    "anime",
+    "gogoanime",
+    "animixplay"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "cheerio": "^1.0.0-rc.12",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.1.1",
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.18"
+  },
+  "type": "module"
+}
