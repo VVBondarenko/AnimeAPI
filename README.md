@@ -1,3 +1,3 @@
 # AnimeAPI
 Coming soon! 
-- Check the dev branch to check development code. 
+- Navigate to the dev branch to check development code. 
