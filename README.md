@@ -1,2 +1,3 @@
 # AnimeAPI
-API that scrapes Gogoanime and Animixplay to give info on Anime Streaming and Discovery.
+Coming soon! 
+- Check the dev branch to check development code. 
