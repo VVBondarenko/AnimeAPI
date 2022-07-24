@@ -8,7 +8,8 @@ import {
     fetchSearchAnimix,
     fetchRecentEpisodes,
     fetchPopular,
-    fetchAnimeInfo,
+    fetchGogoAnimeInfo,
+    fetchAnimixAnimeInfo,
     fetchAnimeWatchInfo,
     fetchAnimixEpisodeSource,
     fetchGogoanimeEpisodeSource
@@ -53,10 +54,17 @@ app.get('/popular', async (req, res) => {
     res.json(data).status(200);
 });
 
-app.get('/info/:malId', async (req, res) => {
+app.get('/gogoanime/info/:animeId', async (req, res) => {
+    const animeId = req.params.animeId;
+
+    const data = await fetchGogoAnimeInfo({ animeId });
+    res.json(data).status(200);
+})
+
+app.get('/animix/info/:malId', async (req, res) => {
     const malId = req.params.malId;
 
-    const data = await fetchAnimeInfo({ malId: malId });
+    const data = await fetchAnimixAnimeInfo({ malId: malId });
     res.json(data).status(200)
 });
 
