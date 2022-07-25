@@ -13,7 +13,7 @@ import {
     fetchAnimeWatchInfo,
     fetchAnimixEpisodeSource,
     fetchGogoanimeEpisodeSource
-} from './scrapper/scrape.js';
+} from './scraper/scrape.js';
 
 app.use(cors({ origin: "*", credentials: true }));
 app.use(express.json())
