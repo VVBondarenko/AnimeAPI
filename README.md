@@ -5,10 +5,26 @@
 
 ### <div align="center">AnimeAPI is a anime streaming and discovery api built using NodeJS and express that scrapes Gogoanime and Animixplay to return data</div>  
   
+<center>
+    ![GitHub](https://img.shields.io/github/license/IGRohan/AnimeAPI?style=flat-square)  ![GitHub package.json version](https://img.shields.io/github/package-json/v/IGRohan/AnimeAPI?style=flat-square)
+</center>
 
 <br/>
 
 ## Navigation
+- [Navigation](#navigation)
+- [Installation](#installation)
+- [Available Routes](#available-routes)
+  - [Search Anime using Gogoanime](#search-anime-using-gogoanime)
+  - [Search Anime using Animixplay](#search-anime-using-animixplay)
+  - [Get latest released episodes](#get-latest-released-episodes)
+  - [Get popular anime](#get-popular-anime)
+  - [Get anime info from Gogoanime](#get-anime-info-from-gogoanime)
+  - [Get anime info from Animixplay](#get-anime-info-from-animixplay)
+  - [Get anime episodes (from animix's website)](#get-anime-episodes-from-animixs-website)
+  - [Get streaming URLs from Gogoanime](#get-streaming-urls-from-gogoanime)
+  - [Get streaming URLs from Animixplay](#get-streaming-urls-from-animixplay)
+- [Contributing](#contributing)
 
 ## Installation
 Execute the following commands in your terminal:
@@ -24,10 +40,10 @@ npm start
 
 ### Search Anime using Gogoanime
 
-| Parameters    | Description                                                             | Optional   |
-| ------------ | -------------------------------------------------------------------------|---------------------------|
-| `keyw` (string) | Keyword used to search for anime. Example: `GET /gogoanime/search?keyw=jujutsu` | No |
-| `page` (int) | Page number. Limit unknown | Yes
+| Parameters      | Description                                                                     | Optional |
+| --------------- | ------------------------------------------------------------------------------- | -------- |
+| `keyw` (string) | Keyword used to search for anime. Example: `GET /gogoanime/search?keyw=jujutsu` | No       |
+| `page` (int)    | Page number. Limit unknown                                                      | Yes      |
 
 ```js
 axios.get('/animix/search?keyw=jujutsu')
@@ -52,9 +68,9 @@ Output
 
 ### Search Anime using Animixplay
 
-| Parameters    | Description                                                             | Optional   |
-| ------------ | -------------------------------------------------------------------------|---------------------------|
-| `keyw` (string) | Keyword used to search for anime. Example: `GET /animix/search?keyw=jujutsu` | No |
+| Parameters      | Description                                                                  | Optional |
+| --------------- | ---------------------------------------------------------------------------- | -------- |
+| `keyw` (string) | Keyword used to search for anime. Example: `GET /animix/search?keyw=jujutsu` | No       |
 
 
 ```js
@@ -78,10 +94,10 @@ Output
 
 ### Get latest released episodes
 
-| Parameters    | Description                                                             | Optional   |
-| ------------ | -------------------------------------------------------------------------|---------------------------|
-| `type` (string) | Default: 1. **type 1: japanese with subtitle. type 2: english dub with no subtitles. type 3: chinese with english subtitles.** Example: `GET /recent-episodes` | Yes |
-| `page` (int) | Page number. | Yes
+| Parameters      | Description                                                                                                                                                    | Optional |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `type` (string) | Default: 1. **type 1: japanese with subtitle. type 2: english dub with no subtitles. type 3: chinese with english subtitles.** Example: `GET /recent-episodes` | Yes      |
+| `page` (int)    | Page number.                                                                                                                                                   | Yes      |
 
 ```js
 axios.get('/recent-episodes')
@@ -106,9 +122,9 @@ Output
 
 ### Get popular anime
 
-| Parameters    | Description                                                             | Optional   |
-| ------------ | -------------------------------------------------------------------------|---------------------------|
-| `type` (int) | Default: 1 **type 1: weekly most viewed. type 2: most viewed of all time** | Yes |
+| Parameters   | Description                                                                | Optional |
+| ------------ | -------------------------------------------------------------------------- | -------- |
+| `type` (int) | Default: 1 **type 1: weekly most viewed. type 2: most viewed of all time** | Yes      |
 
 
 ```js
@@ -134,9 +150,9 @@ Output
 
 ### Get anime info from Gogoanime
 
-| Parameters    | Description                                                             | Optional   |
-| ------------ | -------------------------------------------------------------------------|---------------------------|
-| `:animeId` (string) | animeId received from other previous calls. | No |
+| Parameters          | Description                                 | Optional |
+| ------------------- | ------------------------------------------- | -------- |
+| `:animeId` (string) | animeId received from other previous calls. | No       |
 
 
 ```js
@@ -178,9 +194,9 @@ Output
 
 ### Get anime info from Animixplay
 
-| Parameters    | Description                                                             | Optional   |
-| ------------ | -------------------------------------------------------------------------|---------------------------|
-| `:malId` (string) | MyAnimeList ID of the anime, also received through some routes. | No |
+| Parameters        | Description                                                     | Optional |
+| ----------------- | --------------------------------------------------------------- | -------- |
+| `:malId` (string) | MyAnimeList ID of the anime, also received through some routes. | No       |
 
 
 ```js
@@ -239,9 +255,9 @@ Output
 
 ### Get anime episodes (from animix's website)
 
-| Parameters    | Description                                                             | Optional   |
-| ------------ | -------------------------------------------------------------------------|---------------------------|
-| `:animeId` (string) | animeId received from other previous calls. | No |
+| Parameters          | Description                                 | Optional |
+| ------------------- | ------------------------------------------- | -------- |
+| `:animeId` (string) | animeId received from other previous calls. | No       |
 
 
 ```js
@@ -274,9 +290,9 @@ Output
 
 ### Get streaming URLs from Gogoanime
 
-| Parameters    | Description                                                             | Optional   |
-| ------------ | -------------------------------------------------------------------------|---------------------------|
-| `:episodeId` (string) | episodeId received from gogoanime anime info route | No |
+| Parameters            | Description                                        | Optional |
+| --------------------- | -------------------------------------------------- | -------- |
+| `:episodeId` (string) | episodeId received from gogoanime anime info route | No       |
 
 
 ```js
@@ -308,9 +324,9 @@ Output
 
 ### Get streaming URLs from Animixplay
 
-| Parameters    | Description                                                             | Optional   |
-| ------------ | -------------------------------------------------------------------------|---------------------------|
-| `:episodeId` (string) | episodeId = {animeId}-episode-{epNum} | No |
+| Parameters            | Description                           | Optional |
+| --------------------- | ------------------------------------- | -------- |
+| `:episodeId` (string) | episodeId = {animeId}-episode-{epNum} | No       |
 
 
 ```js
@@ -327,4 +343,15 @@ Output
     "src": "https://v.vrv.co/evs3/c925fcce0204d351a1e2c282862c3f2a/assets/66019d5a1dc3ae6644144f8543bffc55_,4449484.mp4,4449485.mp4,4449483.mp4,4449481.mp4,4449482.mp4,.urlset/master.m3u8?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cCo6Ly92LnZydi5jby9ldnMzL2M5MjVmY2NlMDIwNGQzNTFhMWUyYzI4Mjg2MmMzZjJhL2Fzc2V0cy82NjAxOWQ1YTFkYzNhZTY2NDQxNDRmODU0M2JmZmM1NV8sNDQ0OTQ4NC5tcDQsNDQ0OTQ4NS5tcDQsNDQ0OTQ4My5tcDQsNDQ0OTQ4MS5tcDQsNDQ0OTQ4Mi5tcDQsLnVybHNldC9tYXN0ZXIubTN1OCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY1ODg1MTQwMX19fV19&Signature=gAOXIDwb3DdGyj0zG2grVo6cmzBri0N0-7JkP8Xa3v8yBpLsM9KXGAnANFWgkH0T1qUxWdJlR6izuX3boiU1fU1PyoClcHW0t~vwXCg2LNS46IBOSdBCYSOBoRIWzLMhdfZlhmobN3Yt34AA90NlYAVSKSmPa~fYn9hjv77ydCnh7EnoAFHSw0xmSLYTtHTLYtLYa55Kvgfbni~JNETOAHq5YJIFZmuf49HXSMIeAYqtHTBfqYzrNA~Lbbx5QaY3wovVjcwwNrF4HLDAmklHvhfJVWLfWAtY0cuxYSWa-RwhPMXQf3AP5n-M8b91Flgp9SNy7WqIbg1-LLWH4cl7Hw__&Key-Pair-Id=APKAJMWSQ5S7ZB3MF5VA"
 }
 ```
+
+## Contributing
+
+Contributions are always welcome!
+
+You can contribute to this project by forking the project, adding
+/making changes, and submitting a pull request.
+
+However the best way to contribute would be to suggest new routes
+or features and if possible, showing the logic and process behind
+it.
 
