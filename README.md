@@ -55,7 +55,7 @@ You may test out these routes by going to [AnimeAPI demo](https://animeapi.up.ra
 | `page` (int)    | Page number. Limit unknown                                                      | Yes      |
 
 ```js
-axios.get('/animix/search?keyw=jujutsu')
+axios.get('/gogoanime/search?keyw=jujutsu')
 .then(response => response.data)
 ```
 
