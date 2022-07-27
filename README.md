@@ -45,6 +45,8 @@ npm start
 
 ## Available Routes
 
+You may test out these routes by going to [AnimeAPI demo](https://animeapi.up.railway.app/), but do note that this might be very slow and it is recommended to self host to get the fastest response time possible.
+
 ### Search Anime using Gogoanime
 
 | Parameters      | Description                                                                     | Optional |
