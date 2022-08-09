@@ -16,7 +16,6 @@ const headerOption = { headers: { "User-Agent": USER_AGENT } };
 // Importing helper functions
 import {
     encodeString,
-    decodeString,
     decodeStreamingLinkAnimix
 } from '../helper/utils.js';
 
@@ -89,7 +88,7 @@ export const fetchSearchAnimix = async ({ list = [], keyw }) => {
     }
 };
 
-export const fetchAnimixAllAnime = async() => {
+export const fetchAnimixAllAnime = async () => {
     try {
         const fetchAnimixAll = await axios.get(animixAll, headerOption);
         return fetchAnimixAll.data;
