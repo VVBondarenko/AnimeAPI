@@ -4,6 +4,7 @@ import { load } from 'cheerio';
 const gogoBase = "https://gogoanime.lu/";
 const animixBase = "https://animixplay.to/"
 const animixSearchApi = "https://cachecow.eu/api/search";
+const animixAll = "https://animixplay.to/assets/s/all.json";
 const gogoBase2 = "https://gogoanime.gg/";
 const gogoajax = "https://ajax.gogo-load.com/";
 const episodeListPage = "https://ajax.gogo-load.com/ajax/load-list-episode";
@@ -87,6 +88,19 @@ export const fetchSearchAnimix = async ({ list = [], keyw }) => {
         }
     }
 };
+
+export const fetchAnimixAllAnime = async() => {
+    try {
+        const fetchAnimixAll = await axios.get(animixAll, headerOption);
+        return fetchAnimixAll.data;
+    } catch (err) {
+        console.log(err)
+        return {
+            error: true,
+            error_message: err
+        }
+    }
+}
 
 export const fetchRecentEpisodes = async ({ list = [], page = 1, type = 1 }) => {
     try {
@@ -253,7 +267,7 @@ export const fetchAnimixAnimeInfo = async ({ malId, list = {} }) => {
     }
 };
 
-export const fetchAnimeWatchInfo = async ({ animeId, list = {} }) => {
+export const fetchAnimixEpisodeInfo = async ({ animeId, list = {} }) => {
     try {
         if (!animeId) {
             return {

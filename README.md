@@ -45,6 +45,8 @@ npm start
 
 ## Available Routes
 
+You may test out these routes by going to [AnimeAPI demo](https://animeapi.up.railway.app/), but do note that this might be very slow and it is recommended to self host to get the fastest response time possible.
+
 ### Search Anime using Gogoanime
 
 | Parameters      | Description                                                                     | Optional |
@@ -53,7 +55,7 @@ npm start
 | `page` (int)    | Page number. Limit unknown                                                      | Yes      |
 
 ```js
-axios.get('/animix/search?keyw=jujutsu')
+axios.get('/gogoanime/search?keyw=jujutsu')
 .then(response => response.data)
 ```
 

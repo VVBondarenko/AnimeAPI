@@ -1,4 +1,5 @@
 import express from 'express';
+
 const app = express();
 import cors from 'cors';
 
@@ -9,8 +10,9 @@ import {
     fetchRecentEpisodes,
     fetchPopular,
     fetchGogoAnimeInfo,
+    fetchAnimixAllAnime,
     fetchAnimixAnimeInfo,
-    fetchAnimeWatchInfo,
+    fetchAnimixEpisodeInfo,
     fetchAnimixEpisodeSource,
     fetchGogoanimeEpisodeSource
 } from './scraper/scrape.js';
@@ -31,6 +33,11 @@ app.get('/gogoanime/search', async (req, res) => {
     const data = await fetchSearchGogo({ keyw: keyw, page: page })
     res.json(data).status(200)
 });
+
+app.get('/animix/all', async (req, res) => {
+    const data = await fetchAnimixAllAnime();
+    res.json(data).status(200)
+})
 
 app.get('/animix/search', async (req, res) => {
     const keyw = req.query.keyw;
@@ -68,10 +75,13 @@ app.get('/animix/info/:malId', async (req, res) => {
     res.json(data).status(200)
 });
 
-app.get('/animix/episodes/:animeId', async (req, res) => {
+app.get([
+    '/animix/episodes/:animeId',
+    '/episodes/:animeId'
+], async (req, res) => {
     const animeId = req.params.animeId;
 
-    const data = await fetchAnimeWatchInfo({ animeId });
+    const data = await fetchAnimixEpisodeInfo({ animeId });
     res.json(data).status(200);
 });
 
