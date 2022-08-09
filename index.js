@@ -68,7 +68,7 @@ app.get('/animix/info/:malId', async (req, res) => {
     res.json(data).status(200)
 });
 
-app.get('/episodes/:animeId', async (req, res) => {
+app.get('/animix/episodes/:animeId', async (req, res) => {
     const animeId = req.params.animeId;
 
     const data = await fetchAnimeWatchInfo({ animeId });

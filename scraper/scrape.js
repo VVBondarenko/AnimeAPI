@@ -121,7 +121,7 @@ export const fetchPopular = async ({ list = [], type = 1 }) => {
 
             res.data.result.map((anime) => {
                 list.push({
-                    title: anime.title,
+                    animeTitle: anime.title,
                     mal_id: anime.url.split("/").reverse()[0],
                     animeImg: anime.picture,
                     views: anime.infotext.split(" ")[3],
@@ -140,7 +140,7 @@ export const fetchPopular = async ({ list = [], type = 1 }) => {
 
             res.data.result.map((anime) => {
                 list.push({
-                    title: anime.title,
+                    animeTitle: anime.title,
                     animeId: anime.url.split("/").reverse()[0],
                     animeImg: anime.picture,
                     format: anime.infotext,
@@ -228,11 +228,7 @@ export const fetchAnimixAnimeInfo = async ({ malId, list = {} }) => {
         const fetchInfoLinks = await axios.get(animixBase + `assets/rec/${malId}.json`, headerOption)
 
         list = {
-            animeTitle: {
-                default: fetchInfo.data.title,
-                english: fetchInfo.data.title_english,
-                japanese: fetchInfo.data.title_japanese
-            },
+            animeTitle: fetchInfo.data.title,
             animeId: fetchInfoLinks.data["Gogoanime"][0].url.split('/').reverse()[0],
             mal_id: fetchInfo.data.mal_id,
             animeImg: fetchInfo.data.image_url,
@@ -302,6 +298,9 @@ export const fetchAnimeWatchInfo = async ({ animeId, list = {} }) => {
 
 export const fetchAnimixEpisodeSource = async ({ episodeId }) => {
     try {
+        let sources = [];
+        let type;
+
         if (!episodeId) return {
             error: "No episode ID provided"
         }
@@ -313,15 +312,35 @@ export const fetchAnimixEpisodeSource = async ({ episodeId }) => {
         const epList = JSON.parse($("#epslistplace").text());
 
         const episodeGogoLink = new URL("https:" + epList[episodeNum - 1]);
-        const content_id = episodeGogoLink.searchParams.get("id");
-        const liveApiLink = "https://animixplay.to/api/live" + encodeString(`${content_id}LTXs3GrU8we9O${encodeString(content_id)}`);
+
+        let liveApiLink;
+
+        //Checking if the episode source link is already a Plyr link or not
+        if (episodeGogoLink.href.includes("player.html")) {
+            liveApiLink = episodeGogoLink.href;
+        } else {
+            const content_id = episodeGogoLink.searchParams.get("id");
+            liveApiLink = "https://animixplay.to/api/live" + encodeString(`${content_id}LTXs3GrU8we9O${encodeString(content_id)}`);
+        };
 
         const src = await decodeStreamingLinkAnimix(liveApiLink);
+
+        if (src.includes("player.html")) {
+            type = "plyr"
+        } else if (src.includes(".m3u8")) {
+            type = "hls"
+        } else if (src.includes(".mp4")) {
+            type = "mp4"
+        };
+        sources.push({
+            file: src,
+            type
+        })
 
         return {
             animeId,
             episodeNum,
-            src
+            sources: sources
         }
     } catch (err) {
         console.log(err)

@@ -11,11 +11,18 @@ export const encodeString = (string) => {
 };
 
 export const decodeStreamingLinkAnimix = async (animixLiveApiLink) => {
-    const animixLiveApiRegex = new RegExp(/(aHR0[^#]+)/)
-    const res = await axios.get(animixLiveApiLink, headerOption);
+    let plyrLink;
 
-    const plyrLink = await res.request.res.responseUrl;
-    const sourceLink = atob(animixLiveApiRegex.exec(plyrLink)[0]);
+    const animixLiveApiRegex = new RegExp(/(aHR0[^#]+)/)
+    if (animixLiveApiLink.includes("player.html")) {
+        plyrLink = animixLiveApiLink
+    } else {
+        const res = await axios.get(animixLiveApiLink, headerOption);
+
+        plyrLink = await res.request.res.responseUrl;
+    }
+
+    const sourceLink = decodeString(animixLiveApiRegex.exec(plyrLink)[0]);
 
     return sourceLink;
 };  

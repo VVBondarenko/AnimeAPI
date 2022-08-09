@@ -144,7 +144,7 @@ Output
 ```json
 [
     {
-        "title": "One Piece",
+        "animeTitle": "One Piece",
         "mal_id": "21",
         "animeImg": "https://cachecow.eu/i/73059c39fee46b7c378a3aa0bdd9b6a2.jpg",
         "views": "2,468,790",
@@ -215,11 +215,7 @@ Output
 
 ```json
 {
-    "animeTitle": {
-        "default": "One Piece",
-        "english": "One Piece",
-        "japanese": "ONE PIECE"
-    },
+    "animeTitle": "One Piece",
     "animeId": "one-piece",
     "mal_id": 21,
     "animeImg": "https://cdn.myanimelist.net/images/anime/6/73245.jpg",
@@ -268,7 +264,7 @@ Output
 
 
 ```js
-axios.get('/episodes/one-piece')
+axios.get('animix/episodes/one-piece')
 .then(response => response.data)
 ```
 
@@ -347,7 +343,12 @@ Output
 {
     "animeId": "one-piece",
     "episodeNum": "1015",
-    "src": "https://v.vrv.co/evs3/c925fcce0204d351a1e2c282862c3f2a/assets/66019d5a1dc3ae6644144f8543bffc55_,4449484.mp4,4449485.mp4,4449483.mp4,4449481.mp4,4449482.mp4,.urlset/master.m3u8?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cCo6Ly92LnZydi5jby9ldnMzL2M5MjVmY2NlMDIwNGQzNTFhMWUyYzI4Mjg2MmMzZjJhL2Fzc2V0cy82NjAxOWQ1YTFkYzNhZTY2NDQxNDRmODU0M2JmZmM1NV8sNDQ0OTQ4NC5tcDQsNDQ0OTQ4NS5tcDQsNDQ0OTQ4My5tcDQsNDQ0OTQ4MS5tcDQsNDQ0OTQ4Mi5tcDQsLnVybHNldC9tYXN0ZXIubTN1OCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY1ODg1MTQwMX19fV19&Signature=gAOXIDwb3DdGyj0zG2grVo6cmzBri0N0-7JkP8Xa3v8yBpLsM9KXGAnANFWgkH0T1qUxWdJlR6izuX3boiU1fU1PyoClcHW0t~vwXCg2LNS46IBOSdBCYSOBoRIWzLMhdfZlhmobN3Yt34AA90NlYAVSKSmPa~fYn9hjv77ydCnh7EnoAFHSw0xmSLYTtHTLYtLYa55Kvgfbni~JNETOAHq5YJIFZmuf49HXSMIeAYqtHTBfqYzrNA~Lbbx5QaY3wovVjcwwNrF4HLDAmklHvhfJVWLfWAtY0cuxYSWa-RwhPMXQf3AP5n-M8b91Flgp9SNy7WqIbg1-LLWH4cl7Hw__&Key-Pair-Id=APKAJMWSQ5S7ZB3MF5VA"
+    "sources": [
+        {
+            "file": "https://v.vrv.co/evs3/c925fcce0204d351a1e2c282862c3f2a/assets/66019d5a1dc3ae6644144f8543bffc55_,4449484.mp4,4449485.mp4,4449483.mp4,4449481.mp4,4449482.mp4,.urlset/master.m3u8........",
+            "type": "hls"
+        }
+    ]
 }
 ```
 
