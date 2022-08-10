@@ -26,6 +26,8 @@
   - [Search Anime using Animixplay](#search-anime-using-animixplay)
   - [Get latest released episodes](#get-latest-released-episodes)
   - [Get popular anime](#get-popular-anime)
+  - [Get all anime](#get-all-anime)
+  - [Get anime by genre](#get-anime-by-genre)
   - [Get anime info from Gogoanime](#get-anime-info-from-gogoanime)
   - [Get anime info from Animixplay](#get-anime-info-from-animixplay)
   - [Get anime episodes (from animix's website)](#get-anime-episodes-from-animixs-website)
@@ -49,10 +51,17 @@ You may test out these routes by going to [AnimeAPI demo](https://animeapi.up.ra
 
 ### Search Anime using Gogoanime
 
-| Parameters      | Description                                                                     | Optional |
-| --------------- | ------------------------------------------------------------------------------- | -------- |
-| `keyw` (string) | Keyword used to search for anime. Example: `GET /gogoanime/search?keyw=jujutsu` | No       |
-| `page` (int)    | Page number. Limit unknown                                                      | Yes      |
+```http
+  GET /gogoanime/search?keyw=${keyw}&page=${page}
+```
+
+| Parameter | Type     | Description                                    |
+| :-------- | :------- | :--------------------------------------------- |
+| `keyw`    | `string` | **Required**. Keyword used to search for anime |
+| `page`    | `int`    | **Optional**. Page number                      |
+
+
+Example:
 
 ```js
 axios.get('/gogoanime/search?keyw=jujutsu')
@@ -77,10 +86,16 @@ Output
 
 ### Search Anime using Animixplay
 
-| Parameters      | Description                                                                  | Optional |
-| --------------- | ---------------------------------------------------------------------------- | -------- |
-| `keyw` (string) | Keyword used to search for anime. Example: `GET /animix/search?keyw=jujutsu` | No       |
+```http
+  GET /animix/search?keyw=${keyw}
+```
 
+| Parameter | Type     | Description                                    |
+| :-------- | :------- | :--------------------------------------------- |
+| `keyw`    | `string` | **Required**. Keyword used to search for anime |
+
+
+Example:
 
 ```js
 axios.get('/animix/search?keyw=jujutsu')
@@ -103,10 +118,17 @@ Output
 
 ### Get latest released episodes
 
-| Parameters      | Description                                                                                                                                                    | Optional |
-| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `type` (string) | Default: 1. **type 1: japanese with subtitle. type 2: english dub with no subtitles. type 3: chinese with english subtitles.** Example: `GET /recent-episodes` | Yes      |
-| `page` (int)    | Page number.                                                                                                                                                   | Yes      |
+```http
+  GET /recent-episodes
+```
+
+| Parameter | Type  | Description                                                                                                            |
+| :-------- | :---- | :--------------------------------------------------------------------------------------------------------------------- |
+| `type`    | `int` | **Optional**. Type 1 (default): Japanese Audio/Eng subs. Type 2: English Audio/No Subs. Type 3: Chinese Audio/Eng subs |
+| `page`    | `int` | **Optional**. Page number                                                                                              |
+
+
+Example:
 
 ```js
 axios.get('/recent-episodes')
@@ -118,12 +140,12 @@ Output
 ```json
 [
     {
-        "episodeId": "bonobono-1995-episode-46",
-        "animeTitle": "Bonobono (1995)",
-        "episodeNum": "46",
+        "episodeId": "made-in-abyss-retsujitsu-no-ougonkyou-episode-6",
+        "animeTitle": "Made in Abyss: Retsujitsu no Ougonkyou",
+        "episodeNum": "6",
         "subOrDub": "SUB",
-        "animeImg": "https://gogocdn.net/cover/bonobono-1995.png",
-        "episodeUrl": "https://gogoanime.lu///bonobono-1995-episode-46"
+        "animeImg": "https://gogocdn.net/cover/made-in-abyss-retsujitsu-no-ougonkyou.png",
+        "episodeUrl": "https://gogoanime.lu///made-in-abyss-retsujitsu-no-ougonkyou-episode-6"
     },
     {...}
 ]
@@ -131,10 +153,16 @@ Output
 
 ### Get popular anime
 
-| Parameters   | Description                                                                | Optional |
-| ------------ | -------------------------------------------------------------------------- | -------- |
-| `type` (int) | Default: 1 **type 1: weekly most viewed. type 2: most viewed of all time** | Yes      |
+```http
+  GET /popular
+```
 
+| Parameter | Type  | Description                                                                         |
+| :-------- | :---- | :---------------------------------------------------------------------------------- |
+| `type`    | `int` | **Optional**. Type 1 (default): Weekly most viewed. Type 2: Most viewed of all time |
+
+
+Example:
 
 ```js
 axios.get('/popular')
@@ -157,12 +185,77 @@ Output
 ]
 ```
 
+### Get all anime
+
+```http
+  GET /animix/all
+```
+
+
+Example: 
+
+```js
+axios.get('/animix/all')
+.then(response => response.data)
+```
+
+Output
+
+```json
+[
+    {
+        "animeTitle": "The Strongest Magic Doctor Mixed City",
+        "animeId": "the-strongest-magic-doctor-mixed-city"
+    },
+    {...}
+]
+```
+
+### Get anime by genre
+
+```http
+  GET /genre/${genre}
+```
+
+| Parameter | Type     | Description                                                    |
+| :-------- | :------- | :------------------------------------------------------------- |
+| `:genre`  | `string` | **Required**. Genre. Automatically sorts results by popularity |
+
+
+Example:
+
+```js
+axios.get('/genre/action')
+.then(response => response.data)
+```
+
+Output
+
+```json
+[
+    {
+        "animeTitle": "Demon Slayer: Kimetsu no Yaiba Entertainment District Arc",
+        "animeId": "kimetsu-no-yaiba-yuukaku-hen",
+        "animeImg": "https://cachecow.eu/i/79cccf7f5390f397ace739a0aec23b04.jpg",
+        "animeSeason": "Winter 2022 Anime ",
+        "score": 8.86
+    },
+    {...}
+]
+```
+
 ### Get anime info from Gogoanime
 
-| Parameters          | Description                                 | Optional |
-| ------------------- | ------------------------------------------- | -------- |
-| `:animeId` (string) | animeId received from other previous calls. | No       |
+```http
+  GET /gogoanime/info/${animeId}
+```
 
+| Parameter  | Type     | Description                                           |
+| :--------- | :------- | :---------------------------------------------------- |
+| `:animeId` | `string` | **Required**. animeId (received from other api calls) |
+
+
+Example:
 
 ```js
 axios.get('/gogoanime/info/one-piece')
@@ -203,10 +296,16 @@ Output
 
 ### Get anime info from Animixplay
 
-| Parameters        | Description                                                     | Optional |
-| ----------------- | --------------------------------------------------------------- | -------- |
-| `:malId` (string) | MyAnimeList ID of the anime, also received through some routes. | No       |
+```http
+  GET /animix/info/${malId}
+```
 
+| Parameter | Type  | Description                                                                   |
+| :-------- | :---- | :---------------------------------------------------------------------------- |
+| `:malId`  | `int` | **Required**. MyAnimeList ID of the anime, also received through some routes. |
+
+
+Example:
 
 ```js
 axios.get('/animix/info/21')
@@ -260,10 +359,16 @@ Output
 
 ### Get anime episodes (from animix's website)
 
-| Parameters          | Description                                 | Optional |
-| ------------------- | ------------------------------------------- | -------- |
-| `:animeId` (string) | animeId received from other previous calls. | No       |
+```http
+  GET /animix/episodes/${animeId}
+```
 
+| Parameter  | Type     | Description                                            |
+| :--------- | :------- | :----------------------------------------------------- |
+| `:animeId` | `string` | **Required**. animeId (received from other api calls). |
+
+
+Example:
 
 ```js
 axios.get('animix/episodes/one-piece')
@@ -295,10 +400,16 @@ Output
 
 ### Get streaming URLs from Gogoanime
 
-| Parameters            | Description                                        | Optional |
-| --------------------- | -------------------------------------------------- | -------- |
-| `:episodeId` (string) | episodeId received from gogoanime anime info route | No       |
+```http
+  GET /gogoanime/watch/${episodeId}
+```
 
+| Parameter    | Type     | Description                                                       |
+| :----------- | :------- | :---------------------------------------------------------------- |
+| `:episodeId` | `string` | **Required**. episodeId received from gogoanime anime info route. |
+
+
+Example:
 
 ```js
 axios.get('/gogoanime/watch/one-piece-episode-1015')
@@ -329,10 +440,16 @@ Output
 
 ### Get streaming URLs from Animixplay
 
-| Parameters            | Description                           | Optional |
-| --------------------- | ------------------------------------- | -------- |
-| `:episodeId` (string) | episodeId = {animeId}-episode-{epNum} | No       |
+```http
+  GET /animix/watch/${episodeId}
+```
 
+| Parameter    | Type     | Description                                         |
+| :----------- | :------- | :-------------------------------------------------- |
+| `:episodeId` | `string` | **Required**. episodeId = {animeId}-episode-{epNum} |
+
+
+Example:
 
 ```js
 axios.get('/animix/watch/one-piece-episode-1015')

@@ -9,6 +9,7 @@ import {
     fetchSearchAnimix,
     fetchRecentEpisodes,
     fetchPopular,
+    fetchAnimeByGenre,
     fetchGogoAnimeInfo,
     fetchAnimixAllAnime,
     fetchAnimixAnimeInfo,
@@ -34,11 +35,6 @@ app.get('/gogoanime/search', async (req, res) => {
     res.json(data).status(200)
 });
 
-app.get('/animix/all', async (req, res) => {
-    const data = await fetchAnimixAllAnime();
-    res.json(data).status(200)
-})
-
 app.get('/animix/search', async (req, res) => {
     const keyw = req.query.keyw;
 
@@ -59,6 +55,18 @@ app.get('/popular', async (req, res) => {
 
     const data = await fetchPopular({ type });
     res.json(data).status(200);
+});
+
+app.get('/animix/all', async (req, res) => {
+    const data = await fetchAnimixAllAnime({});
+    res.json(data).status(200)
+});
+
+app.get('/genre/:genre', async (req, res) => {
+    const genre = req.params.genre;
+
+    const data = await fetchAnimeByGenre({ genre });
+    res.json(data).status(200)
 });
 
 app.get('/gogoanime/info/:animeId', async (req, res) => {

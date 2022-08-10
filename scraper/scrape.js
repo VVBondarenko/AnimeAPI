@@ -13,10 +13,20 @@ const goloadStreaming = "https://goload.pro/streaming.php"
 const USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36";
 const headerOption = { headers: { "User-Agent": USER_AGENT } };
 
+const GENRES = [
+    'Action', 'Adventure', 'Anti-Hero', 'CGDCT', 'College', 'Comedy', 'Drama', 'Ecchi', 'Fantasy', 'Gag Humor',
+    'Game', 'Harem', 'Historical', 'Horror', 'Idol', 'Isekai', 'Iyashikei', 'Josei', 'Kids', 'Magical Girl',
+    'Martial Arts', 'Mecha', 'Military', 'Movie', 'Music', 'Mythology', 'Mystery', 'Otaku', 'Parody', 'Police',
+    'Psychological', 'Racing', 'Revenge', 'Romance', 'Rural', 'Samurai', 'School', 'Sci-Fi', 'Seinen', 'Shoujo',
+    'Shoujo Ai', 'Shounen', 'Shounen Ai', 'Slice of Life', 'Space', 'Sports', 'Super Power', 'Supernatural',
+    'Survival', 'Suspense', 'Time Travel', 'Vampire', 'Work'
+]
+
 // Importing helper functions
 import {
     encodeString,
-    decodeStreamingLinkAnimix
+    decodeStreamingLinkAnimix,
+    firstLetterToUpperCase
 } from '../helper/utils.js';
 
 // Importing Gogoanime functions
@@ -28,7 +38,8 @@ import {
 export const fetchSearchGogo = async ({ list = [], keyw, page = 1 }) => {
     try {
         if (!keyw) return {
-            error: "No keyword provided"
+            error: true,
+            error_message: "No keyword provided"
         }
         const fetchSearchPage = await axios.get(gogoBase + `/search.html?keyword=${keyw}&page=${page}`)
         const $ = load(fetchSearchPage.data)
@@ -56,7 +67,8 @@ export const fetchSearchGogo = async ({ list = [], keyw, page = 1 }) => {
 export const fetchSearchAnimix = async ({ list = [], keyw }) => {
     try {
         if (!keyw) return {
-            error: "No keyword provided"
+            error: true,
+            error_message: "No keyword provided"
         }
         const fetchAnimix = await axios.request({
             url: animixSearchApi,
@@ -87,19 +99,6 @@ export const fetchSearchAnimix = async ({ list = [], keyw }) => {
         }
     }
 };
-
-export const fetchAnimixAllAnime = async () => {
-    try {
-        const fetchAnimixAll = await axios.get(animixAll, headerOption);
-        return fetchAnimixAll.data;
-    } catch (err) {
-        console.log(err)
-        return {
-            error: true,
-            error_message: err
-        }
-    }
-}
 
 export const fetchRecentEpisodes = async ({ list = [], page = 1, type = 1 }) => {
     try {
@@ -163,6 +162,81 @@ export const fetchPopular = async ({ list = [], type = 1 }) => {
         }
 
         return list;
+    } catch (err) {
+        console.log(err)
+        return {
+            error: true,
+            error_message: err
+        }
+    }
+};
+
+export const fetchAnimixAllAnime = async ({ list = [] }) => {
+    try {
+        const fetchAnimixAll = await axios.get(animixAll, headerOption);
+        fetchAnimixAll.data.map(anime => {
+            list.push({
+                animeTitle: anime.title,
+                animeId: anime.id
+            })
+        });
+
+        return list;
+    } catch (err) {
+        console.log(err)
+        return {
+            error: true,
+            error_message: err
+        }
+    }
+}
+
+export const fetchAnimeByGenre = async ({ list = [], genre }) => {
+    try {
+        if (!genre) {
+            return {
+                error: true,
+                error_message: "No genre provided"
+            }
+        };
+
+        if (genre.toLowerCase() === "anti-hero") {
+            genre = "Anti-Hero"
+        } else if (genre.toLowerCase() === "cgdct") {
+            genre = "CGDCT"
+        } else {
+            genre = firstLetterToUpperCase(genre);
+        }
+
+        if (!GENRES.includes(genre)) {
+            return {
+                error: true,
+                error_message: "This genre does not exist."
+            }
+        };
+
+        const res = await axios.request({
+            url: animixBase + "api/search",
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "User-Agent": USER_AGENT
+            },
+            data: new URLSearchParams({ genre, minstr: 99999999, orderby: "popular" })
+        });
+
+        res.data.result.map((anime) => {
+            list.push({
+                animeTitle: anime.title,
+                animeId: anime.url.split("/v1/")[1],
+                animeImg: anime.picture,
+                animeSeason: anime.infotext,
+                score: anime.score / 100
+            })
+        });
+
+        return list;
+
     } catch (err) {
         console.log(err)
         return {
