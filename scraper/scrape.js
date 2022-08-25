@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { load } from 'cheerio';
+import parser from 'xml2json';
 
 const gogoBase = "https://gogoanime.lu/";
 const animixBase = "https://animixplay.to/"
@@ -100,7 +101,7 @@ export const fetchSearchAnimix = async ({ list = [], keyw }) => {
     }
 };
 
-export const fetchRecentEpisodes = async ({ list = [], page = 1, type = 1 }) => {
+export const fetchGogoRecentEpisodes = async ({ list = [], page = 1, type = 1 }) => {
     try {
         const res = await axios.get(gogoajax + `ajax/page-recent-release.html?page=${page}&type=${type}`)
         const $ = load(res.data)
@@ -123,6 +124,34 @@ export const fetchRecentEpisodes = async ({ list = [], page = 1, type = 1 }) => 
             error: true,
             error_message: err
         }
+    }
+};
+
+export const fetchAnimixRecentEpisodes = async ({ list = [] }) => {
+    try {
+        const res = await axios.get(animixBase + 'rsssub.xml');
+        const jsonResults = JSON.parse(parser.toJson(res.data)).rss.channel.item;
+
+        jsonResults.map((anime) => {
+            const $ = load(anime.description);
+            list.push({
+                episodeTitle: anime.title.split(" ").slice(0, -2).join(" "),
+                animeId: anime.link.split("/")[4],
+                releaseTimeUnix: Date.parse(anime.pubDate) / 1000,
+                mal_id: anime.idmal,
+                episodeNum: anime.ep.split("/")[0],
+                episodes: anime.ep,
+                animeImg: $("img").attr("src")
+            })
+        });
+
+        return list;
+    } catch (err) {
+        console.log(err)
+        return {
+            error: true,
+            error_message: err
+        };
     }
 };
 

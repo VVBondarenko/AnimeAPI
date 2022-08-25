@@ -24,7 +24,8 @@
 - [Available Routes](#available-routes)
   - [Search Anime using Gogoanime](#search-anime-using-gogoanime)
   - [Search Anime using Animixplay](#search-anime-using-animixplay)
-  - [Get latest released episodes](#get-latest-released-episodes)
+  - [Get latest released episodes from Gogoanime](#get-latest-released-episodes-from-gogoanime)
+  - [Get latest released episodes from Animixplay](#get-latest-released-episodes-from-animixplay)
   - [Get popular anime](#get-popular-anime)
   - [Get all anime](#get-all-anime)
   - [Get anime by genre](#get-anime-by-genre)
@@ -116,10 +117,10 @@ Output
 ]
 ```
 
-### Get latest released episodes
+### Get latest released episodes from Gogoanime
 
 ```http
-  GET /recent-episodes
+  GET /gogoanime/recent-episodes
 ```
 
 | Parameter | Type  | Description                                                                                                            |
@@ -131,7 +132,7 @@ Output
 Example:
 
 ```js
-axios.get('/recent-episodes')
+axios.get('/gogoanime/recent-episodes')
 .then(response => response.data)
 ```
 
@@ -146,6 +147,36 @@ Output
         "subOrDub": "SUB",
         "animeImg": "https://gogocdn.net/cover/made-in-abyss-retsujitsu-no-ougonkyou.png",
         "episodeUrl": "https://gogoanime.lu///made-in-abyss-retsujitsu-no-ougonkyou-episode-6"
+    },
+    {...}
+]
+```
+
+### Get latest released episodes from Animixplay
+
+```http
+  GET /animix/recent-episodes
+```                                                                                            
+
+Example:
+
+```js
+axios.get('/animix/recent-episodes')
+.then(response => response.data)
+```
+
+Output
+
+```json
+[
+    {
+        "episodeTitle": "Call of the Night",
+        "animeId": "yofukashi-no-uta",
+        "releaseTimeUnix": 1661449506,
+        "mal_id": "50346",
+        "episodeNum": "8",
+        "episodes": "8/13",
+        "animeImg": "https://cdn.animixplay.to/i/c3668266da90c7b66bc52152593e50bb.jpg"
     },
     {...}
 ]

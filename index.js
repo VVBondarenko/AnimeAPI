@@ -7,7 +7,8 @@ import cors from 'cors';
 import {
     fetchSearchGogo,
     fetchSearchAnimix,
-    fetchRecentEpisodes,
+    fetchGogoRecentEpisodes,
+    fetchAnimixRecentEpisodes,
     fetchPopular,
     fetchAnimeByGenre,
     fetchGogoAnimeInfo,
@@ -42,12 +43,17 @@ app.get('/animix/search', async (req, res) => {
     res.json(data).status(200)
 });
 
-app.get('/recent-episodes', async (req, res) => {
+app.get('/gogoanime/recent-episodes', async (req, res) => {
     const page = req.query.page;
     const type = req.query.type;
 
-    const data = await fetchRecentEpisodes({ page, type });
+    const data = await fetchGogoRecentEpisodes({ page, type });
     res.json(data).status(200)
+});
+
+app.get('/animix/recent-episodes', async (req, res) => {
+    const data = await fetchAnimixRecentEpisodes({});
+    res.json(data).status(200);
 });
 
 app.get('/popular', async (req, res) => {
