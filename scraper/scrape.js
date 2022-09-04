@@ -416,6 +416,7 @@ export const fetchAnimixEpisodeSource = async ({ episodeId }) => {
     try {
         let sources = [];
         let type;
+        let episodeGogoLink;
 
         if (!episodeId) return {
             error: "No episode ID provided"
@@ -427,7 +428,12 @@ export const fetchAnimixEpisodeSource = async ({ episodeId }) => {
         const $ = load(res.data)
         const epList = JSON.parse($("#epslistplace").text());
 
-        const episodeGogoLink = new URL("https:" + epList[episodeNum - 1]);
+        if (episodeNum in epList.extra) {
+            episodeGogoLink = new URL("https:" + epList.extra[episodeNum]);
+        } else {
+            episodeGogoLink = new URL("https:" + epList[episodeNum - 1]);
+        };
+
 
         let liveApiLink;
 
