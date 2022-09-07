@@ -1,6 +1,6 @@
 {
   "name": "anime-api",
-  "version": "1.0.0",
+  "version": "1.1",
   "description": "A simple API to search, scrape popular and recent animes, streaming links and more.",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "gogoanime",
     "animixplay"
   ],
-  "author": "",
+  "author": "IGRohan",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.27.2",

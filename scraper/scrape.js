@@ -345,7 +345,7 @@ export const fetchAnimixAnimeInfo = async ({ malId, list = {} }) => {
 
         list = {
             animeTitle: fetchInfo.data.title,
-            animeId: fetchInfoLinks.data["Gogoanime"][0].url.split('/').reverse()[0],
+            animeId: fetchInfoLinks.data["Gogoanime"] ? fetchInfoLinks?.data["Gogoanime"][0].url.split('/').reverse()[0] : "",
             mal_id: fetchInfo.data.mal_id,
             animeImg: fetchInfo.data.image_url,
             episodes: fetchInfo.data.episodes,
@@ -354,9 +354,9 @@ export const fetchAnimixAnimeInfo = async ({ malId, list = {} }) => {
             synopsis: fetchInfo.data.synopsis,
             genres: fetchInfo.data.genres.map((genr) => genr.name),
             studios: fetchInfo.data.studios.map((st) => st.name),
-            gogoAnimeLink: fetchInfoLinks.data["Gogoanime"],
-            animepaheLink: fetchInfoLinks.data["animepahe"],
-            zoroLink: fetchInfoLinks.data["Zoro"]
+            gogoAnimeLink: fetchInfoLinks?.data["Gogoanime"],
+            animepaheLink: fetchInfoLinks?.data["animepahe"],
+            zoroLink: fetchInfoLinks?.data["Zoro"]
         }
 
         return list;
