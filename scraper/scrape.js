@@ -428,9 +428,14 @@ export const fetchAnimixEpisodeSource = async ({ episodeId }) => {
         const $ = load(res.data)
         const epList = JSON.parse($("#epslistplace").text());
 
-        if (episodeNum in epList.extra) {
-            episodeGogoLink = new URL("https:" + epList.extra[episodeNum]);
-        } else {
+        if (epList.extra) {
+            if (episodeNum in epList.extra) {
+                episodeGogoLink = new URL("https:" + epList.extra[episodeNum]);
+            } else {
+                episodeGogoLink = new URL("https:" + epList[episodeNum - 1]);
+            };
+        }
+        else {
             episodeGogoLink = new URL("https:" + epList[episodeNum - 1]);
         };
 
