@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { load } from 'cheerio';
-import parser from 'xml2json';
+import { XMLParser } from 'fast-xml-parser';
 
 const gogoBase = "https://gogoanime.lu/";
 const animixBase = "https://animixplay.to/"
@@ -130,7 +130,8 @@ export const fetchGogoRecentEpisodes = async ({ list = [], page = 1, type = 1 })
 export const fetchAnimixRecentEpisodes = async ({ list = [] }) => {
     try {
         const res = await axios.get(animixBase + 'rsssub.xml');
-        const jsonResults = JSON.parse(parser.toJson(res.data)).rss.channel.item;
+        const parser = new XMLParser();
+        const jsonResults = parser.parse(res.data).rss.channel.item;
 
         jsonResults.map((anime) => {
             const $ = load(anime.description);
