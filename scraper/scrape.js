@@ -341,12 +341,16 @@ export const fetchAnimixAnimeInfo = async ({ malId, list = {} }) => {
         if (!malId) return {
             error: "No ID provided"
         };
+
         const fetchInfo = await axios.get(animixBase + `assets/mal/${malId}.json`, headerOption);
         const fetchInfoLinks = await axios.get(animixBase + `assets/rec/${malId}.json`, headerOption)
+            .catch(err => { });
+
+        console.log(fetchInfoLinks)
 
         list = {
             animeTitle: fetchInfo.data.title,
-            animeId: fetchInfoLinks.data["Gogoanime"] ? fetchInfoLinks?.data["Gogoanime"][0].url.split('/').reverse()[0] : "",
+            animeId: fetchInfoLinks?.data["Gogoanime"] ? fetchInfoLinks?.data["Gogoanime"][0].url.split('/').reverse()[0] : "",
             mal_id: fetchInfo.data.mal_id,
             animeImg: fetchInfo.data.image_url,
             episodes: fetchInfo.data.episodes,
