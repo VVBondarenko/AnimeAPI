@@ -5,6 +5,7 @@ import { XMLParser } from 'fast-xml-parser';
 const gogoBase = "https://gogoanime.lu/";
 const animixBase = "https://animixplay.to/"
 const animixSearchApi = "https://cachecow.eu/api/search";
+const animixSearchApi2 = "https://v1.ij7p9towl8uj4qafsopjtrjk.workers.dev/";
 const animixAll = "https://animixplay.to/assets/s/all.json";
 const gogoBase2 = "https://gogoanime.gg/";
 const gogoajax = "https://ajax.gogo-load.com/";
@@ -72,21 +73,23 @@ export const fetchSearchAnimix = async ({ list = [], keyw }) => {
             error_message: "No keyword provided"
         }
         const fetchAnimix = await axios.request({
-            url: animixSearchApi,
+            url: animixSearchApi2,
             method: 'POST',
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
                 "User-Agent": USER_AGENT
             },
-            data: new URLSearchParams({ qfast: keyw })
+            data: new URLSearchParams({ q2: keyw })
         });
 
+        console.log(fetchAnimix.data)
+
         const $ = load(fetchAnimix.data.result);
-        $('a').each((index, element) => {
+        $('li').each((index, element) => {
             list.push({
-                animeTitle: $(element).attr('title'),
-                animeId: $(element).attr('href').split("/v1/")[1],
-                animeImg: $(element).find('div.searchimg > img').attr('src')
+                animeTitle: $(element).find('div > a').attr("title"),
+                animeId: $(element).find('div > a').attr('href').split("/v1/")[1],
+                animeImg: $(element).find('.resultimg').attr('src')
 
             })
         });
@@ -159,7 +162,7 @@ export const fetchAnimixRecentEpisodes = async ({ list = [] }) => {
 export const fetchPopular = async ({ list = [], type = 1 }) => {
     try {
         if (type == 1) {
-            const res = await axios.get(animixBase + 'assets/popular/popular.json', headerOption);
+            const res = await axios.get(animixBase + 'assets/s/popular.json', headerOption);
 
             res.data.result.map((anime) => {
                 list.push({
