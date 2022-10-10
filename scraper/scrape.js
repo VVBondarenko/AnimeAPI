@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { load } from 'cheerio';
 import { XMLParser } from 'fast-xml-parser';
+import FormData from 'form-data';
 
 const gogoBase = "https://gogoanime.lu/";
 const animixBase = "https://animixplay.to/"
+const animixMainPage = animixBase + "api/search";
 const animixSearchApi = "https://cachecow.eu/api/search";
 const animixSearchApi2 = "https://v1.ij7p9towl8uj4qafsopjtrjk.workers.dev/";
 const animixAll = "https://animixplay.to/assets/s/all.json";
@@ -93,6 +95,34 @@ export const fetchSearchAnimix = async ({ list = [], keyw }) => {
         });
 
         return list;
+    } catch (err) {
+        console.log(err)
+        return {
+            error: true,
+            error_message: err
+        }
+    }
+};
+
+export const fetchMainPageAnimix = async ({ list = [], seasonal }) => {
+    try {
+        if (!seasonal) return {
+            error: true,
+            error_message: "No seasonal provided"
+        }
+
+        const form = new FormData();
+        form.append("seasonal", seasonal);
+        const fetchAnimix = await axios.request({
+            method: 'post',
+            url: animixMainPage,
+            headers: { 
+              ...form.getHeaders()
+            },
+            data : form
+          });
+
+        return fetchAnimix.data;
     } catch (err) {
         console.log(err)
         return {
