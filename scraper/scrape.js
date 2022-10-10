@@ -82,8 +82,6 @@ export const fetchSearchAnimix = async ({ list = [], keyw }) => {
             data: new URLSearchParams({ q2: keyw })
         });
 
-        console.log(fetchAnimix.data)
-
         const $ = load(fetchAnimix.data.result);
         $('li').each((index, element) => {
             list.push({
